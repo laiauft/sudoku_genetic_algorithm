@@ -1,2 +1,2 @@
-# algoritmo_genetico_sudoku
+# Sudoku Solver with Genetics Algorithm
 Sudoku solver with genetics algorithm with python.
