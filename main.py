@@ -1,8 +1,7 @@
 import sudoku_structure
 import random
-import numpy
 
-pop_size = 3
+pop_size = 100
 
 def generate_population(puzzle, pop_size):
   population = []
@@ -31,24 +30,47 @@ def rate_fitness(population, pop_size):
     
     print(f"Individual {i} --> {population[i]}")
     
+    sudoku_structure.print_rows(population[i])
+    
     for j in range(len(population[i])):
-      print(f"{j}º row of Individual {i} --> {population[i][j]}")
-      withoutDuplicates = [*set(population[i][j])]
-      print(f"{j}º row of Individual {i} --> {withoutDuplicates}")
-      errorsInRow = len(population[i]) - len(withoutDuplicates)
-      print(f"{j}º row of Individual {i} Errors --> {errorsInRow}")
+      print("ROWS")
+      print(f"---- {j}º row of Individual {i} --> {population[i][j]}")
+      rowsWithoutDuplicates = [*set(population[i][j])]
+      print(f"---- {j}º row of Individual {i} --> {rowsWithoutDuplicates}")
+      errorsInRow = len(population[i]) - len(rowsWithoutDuplicates)
+      print(f"---- {j}º row of Individual {i} Errors --> {errorsInRow}")
       fitness_list[i] += errorsInRow
       
+      print("")
+      
+      print("COLUMNS")
+      population_columns = sudoku_structure.categorize_columns(population[i])
+      print(f"---- {j}º column of Individual {i} --> {population_columns[j]}")
+      columnsWithoutDuplicates = [*set(population_columns[j])]
+      print(f"---- {j}º column of Individual {i} --> {columnsWithoutDuplicates}")
+      errorsInColumn = len(population[i]) - len(columnsWithoutDuplicates)
+      print(f"---- {j}º column of Individual {i} Errors --> {errorsInColumn}")
+      fitness_list[i] += errorsInColumn
+      
+      print("")
+      
+      print("QUADRANTS")
+      population_quadrants = sudoku_structure.categorize_quadrants(population[i])
+      print(f"---- {j}º quadrant of Individual {i} --> {population_quadrants[j]}")
+      quadrantsWithoutDuplicates = [*set(population_quadrants[j])]
+      print(f"---- {j}º quadrant of Individual {i} --> {quadrantsWithoutDuplicates}")
+      errorsInQuadrant = len(population[i]) - len(quadrantsWithoutDuplicates)
+      print(f"---- {j}º quadrant of Individual {i} Errors --> {errorsInQuadrant}")
+      fitness_list[i] += errorsInQuadrant
+      
     print("")
-    # res = 
-    # print(res)
     
-  
-  for i in range(len(fitness_list)):
-    print(f"Fitness of individual {i} --> {fitness_list[i]}")
 
     
     
+  
+  for i in range(len(fitness_list)):
+    print(f"Fitness of individual {i} --> {fitness_list[i]}")   
 
 def main():
   print("Insert the puzzle as string: ")
