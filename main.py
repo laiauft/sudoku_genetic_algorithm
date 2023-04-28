@@ -1,47 +1,56 @@
 import sudoku_structure
 import random
-import threading
+import numpy
 
-pop_size = 5
+pop_size = 3
 
-class GenerateIndividualThread(threading.Thread):
-  def __init__(self, puzzle, individual_number):
-    threading.Thread.__init__(self)
-    self.puzzle = puzzle
-    self.individual_number = individual_number
-    self.individual = None
-
-  def run(self):
-    self.individual = []
-    for row in self.puzzle:
+def generate_population(puzzle, pop_size):
+  population = []
+  for _ in range(pop_size):
+    individual = []
+    for row in puzzle:
       new_row = []
       for val in row:
         if val == 0:
           new_row.append(random.randint(1, 9))
         else:
           new_row.append(val)
-      self.individual.append(new_row)
-
-  def get_individual(self):
-    return self.individual
-
-def generate_population(puzzle, pop_size):
-  threads = []
-  for i in range(pop_size):
-    thread = GenerateIndividualThread(puzzle, i)
-    threads.append(thread)
-    thread.start()
-
-  population = []
-  for thread in threads:
-    thread.join()
-    population.append(thread.get_individual())
-
+      individual.append(new_row)
+    population.append(individual)
   return population
+
+def rate_fitness(population, pop_size):
+  # Every individual must have a fitness
+  # So, an array will storage the value of fitness for every individual
+  # The fitness_list[0] is for the first individual: population[0]
   
+  fitness_list = [0] * pop_size
+  
+  # Loop that iterates the value of pop_size
+  for i in range(pop_size):
+    
+    print(f"Individual {i} --> {population[i]}")
+    
+    for j in range(len(population[i])):
+      print(f"{j}º row of Individual {i} --> {population[i][j]}")
+      withoutDuplicates = [*set(population[i][j])]
+      print(f"{j}º row of Individual {i} --> {withoutDuplicates}")
+      errorsInRow = len(population[i]) - len(withoutDuplicates)
+      print(f"{j}º row of Individual {i} Errors --> {errorsInRow}")
+      fitness_list[i] += errorsInRow
+      
+    print("")
+    # res = 
+    # print(res)
+    
+  
+  for i in range(len(fitness_list)):
+    print(f"Fitness of individual {i} --> {fitness_list[i]}")
+
+    
+    
 
 def main():
-
   print("Insert the puzzle as string: ")
   puzzle_string = input()
   puzzle = sudoku_structure.string_to_array(puzzle_string)
@@ -57,10 +66,12 @@ def main():
     print("3. Print quadrants.")
     print("4. Use another puzzle.")
     print("5. Generate initial population.")
+    print("6. Rate fitness.")
     print("0. Quit the program.")
     print(20*"--")
     
-    option = int(input("\n\nOption: "))
+    option = int(input("--> Option: "))
+    print("\n\n")
     
     if option == 1:
       sudoku_structure.print_rows(puzzle)
@@ -81,6 +92,12 @@ def main():
       print("")
       for i in range(pop_size):
         print(f"Individual {i}: {population[i]}")
+    
+    elif option == 6:
+      if len(population) == 0:
+        print("You must generate initial population first.")
+      else:
+        rate_fitness(population, pop_size)
     
     elif option == 0:
       print("Exiting.")
