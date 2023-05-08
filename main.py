@@ -1,7 +1,7 @@
 import sudoku_structure
 import random
 
-pop_size = 100
+pop_size = 2000
 
 def generate_population(puzzle, pop_size):
   population = []
@@ -18,57 +18,35 @@ def generate_population(puzzle, pop_size):
     population.append(individual)
   return population
 
-def rate_fitness(population, pop_size):
+def rate_fitness_rollet(population, pop_size):
   # Every individual must have a fitness
   # So, an array will storage the value of fitness for every individual
   # The fitness_list[0] is for the first individual: population[0]
   
   fitness_list = [0] * pop_size
+  total_errors_list = [0] * pop_size
+  num = 216
   
   # Loop that iterates the value of pop_size
   for i in range(pop_size):
     
-    print(f"Individual {i} --> {population[i]}")
-    
-    sudoku_structure.print_rows(population[i])
-    
     for j in range(len(population[i])):
-      print("ROWS")
-      print(f"---- {j}º row of Individual {i} --> {population[i][j]}")
       rowsWithoutDuplicates = [*set(population[i][j])]
-      print(f"---- {j}º row of Individual {i} --> {rowsWithoutDuplicates}")
       errorsInRow = len(population[i]) - len(rowsWithoutDuplicates)
-      print(f"---- {j}º row of Individual {i} Errors --> {errorsInRow}")
-      fitness_list[i] += errorsInRow
-      
-      print("")
-      
-      print("COLUMNS")
-      population_columns = sudoku_structure.categorize_columns(population[i])
-      print(f"---- {j}º column of Individual {i} --> {population_columns[j]}")
-      columnsWithoutDuplicates = [*set(population_columns[j])]
-      print(f"---- {j}º column of Individual {i} --> {columnsWithoutDuplicates}")
-      errorsInColumn = len(population[i]) - len(columnsWithoutDuplicates)
-      print(f"---- {j}º column of Individual {i} Errors --> {errorsInColumn}")
-      fitness_list[i] += errorsInColumn
-      
-      print("")
-      
-      print("QUADRANTS")
-      population_quadrants = sudoku_structure.categorize_quadrants(population[i])
-      print(f"---- {j}º quadrant of Individual {i} --> {population_quadrants[j]}")
-      quadrantsWithoutDuplicates = [*set(population_quadrants[j])]
-      print(f"---- {j}º quadrant of Individual {i} --> {quadrantsWithoutDuplicates}")
-      errorsInQuadrant = len(population[i]) - len(quadrantsWithoutDuplicates)
-      print(f"---- {j}º quadrant of Individual {i} Errors --> {errorsInQuadrant}")
-      fitness_list[i] += errorsInQuadrant
-      
-    print("")
-    
+      total_errors_list[i] += errorsInRow
 
-    
-    
-  
+      population_columns = sudoku_structure.categorize_columns(population[i])
+      columnsWithoutDuplicates = [*set(population_columns[j])]
+      errorsInColumn = len(population[i]) - len(columnsWithoutDuplicates)
+      total_errors_list[i] += errorsInColumn
+      
+      population_quadrants = sudoku_structure.categorize_quadrants(population[i])
+      quadrantsWithoutDuplicates = [*set(population_quadrants[j])]
+      errorsInQuadrant = len(population[i]) - len(quadrantsWithoutDuplicates)
+      total_errors_list[i] += errorsInQuadrant
+      
+    fitness_list[i] = num - total_errors_list[i]
+      
   for i in range(len(fitness_list)):
     print(f"Fitness of individual {i} --> {fitness_list[i]}")   
 
@@ -119,7 +97,7 @@ def main():
       if len(population) == 0:
         print("You must generate initial population first.")
       else:
-        rate_fitness(population, pop_size)
+        rate_fitness_rollet(population, pop_size)
     
     elif option == 0:
       print("Exiting.")
