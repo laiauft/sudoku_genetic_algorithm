@@ -4,12 +4,12 @@ A Sudoku puzzle solver Python tool with genetics algorithm.
 A command-line tool to solve sudoku puzzles with genetics algorithms. It's developed by students of LAIA (Liga Acadêmica de Inteligência Artificial - Artificial Intelligence Academic League).
 
 ## Content
-- ### Install and run the project
-- ### Documentation
-- ### Screenshots
-- ### References
-- ### License
-- ### Genetic Algorithm's Flow
+- ### [Install and run the project](https://github.com/laiauft/sudoku_genetic_algorithm#install-and-run-the-project-1)
+- ### [Documentation](https://github.com/laiauft/sudoku_genetic_algorithm#documentation-1)
+- ### [Screenshots](https://github.com/laiauft/sudoku_genetic_algorithm#screenshots-1)
+- ### [References](https://github.com/laiauft/sudoku_genetic_algorithm#references-1)
+- ### [License](https://github.com/laiauft/sudoku_genetic_algorithm#license-1)
+- ### [Genetic Algorithm's Flow](https://github.com/laiauft/sudoku_genetic_algorithm#genetic-algorithms-flow-1)
 
 ## Install and run the project
 
