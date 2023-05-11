@@ -1,7 +1,7 @@
 import sudoku_structure
 import random
 
-pop_size = 2000
+pop_size = 6
 
 def generate_population(puzzle, pop_size):
   population = []
@@ -31,19 +31,19 @@ def rate_fitness_rollet(population, pop_size):
   for i in range(pop_size):
     
     for j in range(len(population[i])):
-      rowsWithoutDuplicates = [*set(population[i][j])]
-      errorsInRow = len(population[i]) - len(rowsWithoutDuplicates)
+      rows_without_duplicates = [*set(population[i][j])]
+      errorsInRow = len(population[i]) - len(rows_without_duplicates)
       total_errors_list[i] += errorsInRow
 
       population_columns = sudoku_structure.categorize_columns(population[i])
-      columnsWithoutDuplicates = [*set(population_columns[j])]
-      errorsInColumn = len(population[i]) - len(columnsWithoutDuplicates)
+      columns_without_duplicates = [*set(population_columns[j])]
+      errorsInColumn = len(population[i]) - len(columns_without_duplicates)
       total_errors_list[i] += errorsInColumn
       
       population_quadrants = sudoku_structure.categorize_quadrants(population[i])
-      quadrantsWithoutDuplicates = [*set(population_quadrants[j])]
-      errorsInQuadrant = len(population[i]) - len(quadrantsWithoutDuplicates)
-      total_errors_list[i] += errorsInQuadrant
+      quadrants_without_duplicates = [*set(population_quadrants[j])]
+      errors_in_quadrant = len(population[i]) - len(quadrants_without_duplicates)
+      total_errors_list[i] += errors_in_quadrant
       
     fitness_list[i] = num - total_errors_list[i]
       
