@@ -1,7 +1,9 @@
+import math
+
 import sudoku_structure
 import random
 
-pop_size = 2000
+pop_size = 10
 
 def generate_population(puzzle, pop_size):
   population = []
@@ -18,6 +20,63 @@ def generate_population(puzzle, pop_size):
     population.append(individual)
   return population
 
+def crossing_individuals(population):
+  children_population = []
+
+  children_count = int(pop_size/2)
+  for i in range(children_count):
+    ### OBSERVAÇÃO
+    #   por enquanto o pai2 de uma criança será 
+    # o pai1 da proxima por conta do contador
+    parents = [population[i], population[i+1]]
+
+    # Cromossomo = lista de LINHA DO SUDOKU [[]]
+    # Gene = linha de VALORES DO SUDOKU     []
+    #   A mutação irá envolver alterar o genes 
+    # para que seja gerado um novo cromossomo 
+    # para um novo individuo da população
+    ## CRUZAMENTO
+    ### mutação com um ponto de cruzamento
+    # c = crossing_point (PONTO DE CRUZAMENTO)
+    c = math.ceil(len(parents[0])/2)
+    genes = parents[0][:c] + parents[1][c:]
+
+    children_population.append(genes)
+    i = i + 1
+
+  for i in range(len(children_population)):
+    print(f'Child {i}: {children_population[i]}')
+  
+  m = children_count # m = numero de indivíduos antigos mantidos
+  new_population = population[:m] + children_population
+  #   A nova população é gerada pelo m indivíduos mantidos 
+  # concatenada com a lista de crianças geradas com o tamanho
+  # definido como `children_count = int(pop_size/2)`. 
+  return new_population
+
+def mutate_individuals(population, puzzle): 
+  #   a taxa de mutação infere quantos indivíduos terão seus 
+  # genes mutados e não a quantidade de genes mutados no individuo
+  mutation_tax = 2 
+
+  mutated_individuals = population[-2:] 
+  for i in range(len(mutated_individuals)):
+    individual = []
+    for row in puzzle:
+      new_row = []
+      for val in row:
+        if val == 0: 
+          new_row.append(random.randint(1, 9))
+        else:
+          new_row.append(val)
+      individual.append(new_row)
+    mutated_individuals[i] = individual
+    print(f'Mutated Individual {i}: {mutated_individuals[i]}')
+    i = i + 1
+  new_population =  population[:-2] + mutated_individuals
+  return new_population 
+
+
 def rate_fitness_rollet(population, pop_size):
   # Every individual must have a fitness
   # So, an array will storage the value of fitness for every individual
@@ -31,19 +90,19 @@ def rate_fitness_rollet(population, pop_size):
   for i in range(pop_size):
     
     for j in range(len(population[i])):
-      rowsWithoutDuplicates = [*set(population[i][j])]
-      errorsInRow = len(population[i]) - len(rowsWithoutDuplicates)
+      rows_without_duplicates = [*set(population[i][j])]
+      errorsInRow = len(population[i]) - len(rows_without_duplicates)
       total_errors_list[i] += errorsInRow
 
       population_columns = sudoku_structure.categorize_columns(population[i])
-      columnsWithoutDuplicates = [*set(population_columns[j])]
-      errorsInColumn = len(population[i]) - len(columnsWithoutDuplicates)
+      columns_without_duplicates = [*set(population_columns[j])]
+      errorsInColumn = len(population[i]) - len(columns_without_duplicates)
       total_errors_list[i] += errorsInColumn
       
       population_quadrants = sudoku_structure.categorize_quadrants(population[i])
-      quadrantsWithoutDuplicates = [*set(population_quadrants[j])]
-      errorsInQuadrant = len(population[i]) - len(quadrantsWithoutDuplicates)
-      total_errors_list[i] += errorsInQuadrant
+      quadrants_without_duplicates = [*set(population_quadrants[j])]
+      errors_in_quadrant = len(population[i]) - len(quadrants_without_duplicates)
+      total_errors_list[i] += errors_in_quadrant
       
     fitness_list[i] = num - total_errors_list[i]
       
@@ -57,6 +116,8 @@ def main():
   
   menu_state = True
   
+  population = []
+
   while(menu_state):
     
     print(20*"--")
@@ -67,6 +128,9 @@ def main():
     print("4. Use another puzzle.")
     print("5. Generate initial population.")
     print("6. Rate fitness.")
+    print("7. Display population individuals.")
+    print("8. Generate children population.")
+    print("9. Mutate individuals in population.")
     print("0. Quit the program.")
     print(20*"--")
     
@@ -99,6 +163,24 @@ def main():
       else:
         rate_fitness_rollet(population, pop_size)
     
+    elif option == 7:
+      if len(population) == 0:
+        print("You must generate initial population first.")
+      else: 
+        for i in range(pop_size):
+          print(f"Individual {i}: {population[i]}")
+
+    elif option == 8:
+      if len(population) == 0: 
+        print("You must generate initial population first.")
+      else: 
+        population = crossing_individuals(population)
+
+    elif option == 9:
+      if len(population) == 0: 
+        print("You must generate initial population first.")
+      else: population = mutate_individuals(population, puzzle)
+
     elif option == 0:
       print("Exiting.")
       break
