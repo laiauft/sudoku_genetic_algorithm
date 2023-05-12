@@ -13,7 +13,7 @@ A command-line tool to solve sudoku puzzles with genetics algorithms. It's devel
 
 ## Install and run the project
 
-Requeriments: [python](https://www.python.org/downloads/).
+Requeriments: [python](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installation/).
 
 Clone the project:
 
@@ -22,10 +22,6 @@ Clone the project:
 Enter the project's directory:
 
     cd sudoku_genetic_algorithm
-
-If you don't have pip installed, you must do:
-
-    python get-pip.py
 
 Update pip:
 
