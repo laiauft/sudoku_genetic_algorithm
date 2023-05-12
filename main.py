@@ -1,15 +1,11 @@
 from algorithms.genetic_algorithm import calculate_fitness, generate_population, roulette_selection
 import problem.sudoku_structure as sudoku_structure
 import sys
+import math
+import random
 
 args = sys.argv
 pop_size = 100
-import math
-
-import sudoku_structure
-import random
-
-pop_size = 10
 
 def generate_population(puzzle, pop_size):
   population = []

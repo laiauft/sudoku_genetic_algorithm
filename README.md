@@ -37,7 +37,7 @@ Install all python packages:
 
 Run the app:
 
-    python main.py problem/test.py
+    python main.py problem/test.txt
 
 ## Documentation
 
