@@ -1,3 +1,9 @@
+from algorithms.genetic_algorithm import calculate_fitness, generate_population, roulette_selection
+import problem.sudoku_structure as sudoku_structure
+import sys
+
+args = sys.argv
+pop_size = 100
 import math
 
 import sudoku_structure
@@ -76,42 +82,11 @@ def mutate_individuals(population, puzzle):
   new_population =  population[:-2] + mutated_individuals
   return new_population 
 
-
-def rate_fitness_rollet(population, pop_size):
-  # Every individual must have a fitness
-  # So, an array will storage the value of fitness for every individual
-  # The fitness_list[0] is for the first individual: population[0]
-  
-  fitness_list = [0] * pop_size
-  total_errors_list = [0] * pop_size
-  num = 216
-  
-  # Loop that iterates the value of pop_size
-  for i in range(pop_size):
-    
-    for j in range(len(population[i])):
-      rows_without_duplicates = [*set(population[i][j])]
-      errorsInRow = len(population[i]) - len(rows_without_duplicates)
-      total_errors_list[i] += errorsInRow
-
-      population_columns = sudoku_structure.categorize_columns(population[i])
-      columns_without_duplicates = [*set(population_columns[j])]
-      errorsInColumn = len(population[i]) - len(columns_without_duplicates)
-      total_errors_list[i] += errorsInColumn
-      
-      population_quadrants = sudoku_structure.categorize_quadrants(population[i])
-      quadrants_without_duplicates = [*set(population_quadrants[j])]
-      errors_in_quadrant = len(population[i]) - len(quadrants_without_duplicates)
-      total_errors_list[i] += errors_in_quadrant
-      
-    fitness_list[i] = num - total_errors_list[i]
-      
-  for i in range(len(fitness_list)):
-    print(f"Fitness of individual {i} --> {fitness_list[i]}")   
-
 def main():
-  print("Insert the puzzle as string: ")
-  puzzle_string = input()
+  print("Starting...")
+  with open(args[1], 'r') as arq:
+    puzzle_string = arq.read()
+
   puzzle = sudoku_structure.string_to_array(puzzle_string)
   
   menu_state = True
@@ -154,14 +129,19 @@ def main():
     elif option == 5:
       population = generate_population(puzzle, pop_size)
       print("")
-      for i in range(pop_size):
-        print(f"Individual {i}: {population[i]}")
+      # for i in range(pop_size):
+      #   print(f"Individual {i}: {population[i]}")
     
     elif option == 6:
       if len(population) == 0:
         print("You must generate initial population first.")
       else:
-        rate_fitness_rollet(population, pop_size)
+        fitness = calculate_fitness(population)
+        parent1 = roulette_selection(population, fitness)
+        parent2 = roulette_selection(population, fitness)
+
+        print("Parent 1:", parent1)
+        print("Parent 2:", parent2)
     
     elif option == 7:
       if len(population) == 0:
