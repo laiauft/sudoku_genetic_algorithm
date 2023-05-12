@@ -74,3 +74,4 @@ SOFTWARE.
 
 ## Genetic Algorithm's Flow
 
+![Genetic Algorithm's Flow](/GeneticAlgorithm'sFlow.jpg)
