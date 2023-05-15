@@ -1,19 +1,20 @@
 import random
 import math
+import numpy as np
 
 def generate_population(puzzle, pop_size):
     population = []
+    puzzle_array = np.array(puzzle)
+
     for _ in range(pop_size):
-        individual = []
-        for row in puzzle:
-            new_row = []
-            for val in row:
-                if val == 0:
-                    new_row.append(random.randint(1, 9))
-                else:
-                    new_row.append(val)
-            individual.append(new_row)
-        population.append(individual)
+        individual = puzzle_array.copy()
+
+        zeros = np.where(individual == 0)
+        random_values = np.random.choice(np.arange(1, 10), size=zeros[0].shape, replace=True)
+
+        individual[zeros] = random_values
+        population.append(individual.tolist())
+
     return population
 
 def calculate_fitness(population):
