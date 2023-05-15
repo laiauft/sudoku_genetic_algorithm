@@ -7,6 +7,7 @@ from genetic.crossing_pairs import crossing_individuals
 
 args = sys.argv
 pop_size = 100
+mut_tax = 2
 
 def main():
     with open(args[1], 'r') as arq:
@@ -18,9 +19,9 @@ def main():
     print("Starting genetic algorithm...")
     print(".\n.\n.")
 
-    population = generate_population(puzzle, pop_size)
+    population = Population(puzzle, pop_size)
     print("Generated initial population...")
-    fitness = calculate_fitness(population)
+    fitness = population.calculate()
     print("Initial population's fitness calculated...")
 
     fitness_average = np.mean(fitness)
@@ -33,8 +34,8 @@ def main():
     print("Median of  initial population's fitness:", median_fitness)
 
 
-    parent1 = roulette_selection(population, fitness)
-    parent2 = roulette_selection(population, fitness)
+    parent1 = roulette_selection(population)
+    parent2 = roulette_selection(population)
 
     print("Parent 1:", parent1)
     print("Parent 2:", parent2)
@@ -49,28 +50,28 @@ def main():
         print("3. Mutate individuals in population.")
         print("0. Quit the program.")
         print(20*"--")
-      
+        
         option = int(input("--> Option: "))
         print("\n\n")
 
         if option == 1:
-            if len(population) == 0:
+            if len(population.individuals) == 0:
                 print("You must generate initial population first.")
             else: 
                 for i in range(pop_size):
-                    print(f"Individual {i}: {population[i]}")
+                    print(f"Individual {i}: {population.individuals[i]}")
 
         elif option == 2:
-            if len(population) == 0: 
+            if len(population.individuals) == 0: 
                 print("You must generate initial population first.")
             else: 
-                population = crossing_individuals(population, pop_size)
+                crossing_individuals(population)
 
         elif option == 3:
-            if len(population) == 0: 
+            if len(population.individuals) == 0: 
                 print("You must generate initial population first.")
             else: 
-                population = mutate_individuals(population, puzzle)
+                mutate_individuals(population, puzzle)
 
         elif option == 0:
             print("Exiting.")
