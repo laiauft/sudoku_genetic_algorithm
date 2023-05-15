@@ -31,9 +31,13 @@ Install all python packages:
 
     pip install -r requeriments.txt
 
+Go to file folder location:
+
+    cd src
+
 Run the app:
 
-    python main.py problem/test.txt
+    python main.py test.txt
 
 ## Documentation
 
