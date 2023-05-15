@@ -1,6 +1,8 @@
-from algorithms.genetic_algorithm import *
-import problem.sudoku_structure as sudoku_structure
 import sys
+import sudoku
+from genetic.population import *
+from genetic.mutation import mutate_individuals
+from genetic.crossing_pairs import crossing_individuals
 
 args = sys.argv
 pop_size = 100
@@ -10,7 +12,7 @@ def main():
   with open(args[1], 'r') as arq:
     puzzle_string = arq.read()
 
-  puzzle = sudoku_structure.string_to_array(puzzle_string)
+  puzzle = sudoku.string_to_array(puzzle_string)
   
   menu_state = True
   
@@ -36,24 +38,21 @@ def main():
     print("\n\n")
     
     if option == 1:
-      sudoku_structure.print_rows(puzzle)
+      sudoku.print_rows(puzzle)
     
     elif option == 2:
-      sudoku_structure.print_columns(puzzle)
+      sudoku.print_columns(puzzle)
     
     elif option == 3:
-      sudoku_structure.print_quadrants(puzzle)
+      sudoku.print_quadrants(puzzle)
       
     elif option == 4:
       print("Insert the puzzle as string: ")
       puzzle_string = input()
-      puzzle = sudoku_structure.string_to_array(puzzle_string)
+      puzzle = sudoku.string_to_array(puzzle_string)
       
     elif option == 5:
       population = generate_population(puzzle, pop_size)
-      print("")
-      # for i in range(pop_size):
-      #   print(f"Individual {i}: {population[i]}")
     
     elif option == 6:
       if len(population) == 0:
