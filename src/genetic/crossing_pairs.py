@@ -1,4 +1,5 @@
 import math
+
 def crossing_individuals(population, pop_size):
 	children_population = [] 
 

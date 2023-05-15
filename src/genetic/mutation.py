@@ -1,4 +1,5 @@
 import random 
+
 def mutate_individuals(population, puzzle): 
 	#   a taxa de mutação infere quantos indivíduos terão seus 
 	# genes mutados e não a quantidade de genes mutados no individuo
