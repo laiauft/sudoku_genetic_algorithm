@@ -8,8 +8,11 @@ from genetic.crossing_pairs import crossing_individuals
 args = sys.argv
 pop_size = 100
 <<<<<<< HEAD
+<<<<<<< HEAD
 max_fitness = 216
 max_generations = 1000
+=======
+>>>>>>> parent of 322ce0b (FEAT new objects created in genetic module)
 =======
 >>>>>>> parent of 322ce0b (FEAT new objects created in genetic module)
 
@@ -24,6 +27,7 @@ def main():
     print(".\n.\n.")
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     ## Step 1: Generate initial random population
     population = Population(puzzle, pop_size)
@@ -31,6 +35,11 @@ def main():
 
     ## Step 2: Calculate fitness of individuals
     fitness = population.calculate()
+=======
+    population = generate_population(puzzle, pop_size)
+    print("Generated initial population...")
+    fitness = calculate_fitness(population)
+>>>>>>> parent of 322ce0b (FEAT new objects created in genetic module)
 =======
     population = generate_population(puzzle, pop_size)
     print("Generated initial population...")
@@ -51,8 +60,13 @@ def main():
     generation = 0
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     while criteria and generation < max_generations:
         print("Generation:", generation)
+=======
+    parent1 = roulette_selection(population, fitness)
+    parent2 = roulette_selection(population, fitness)
+>>>>>>> parent of 322ce0b (FEAT new objects created in genetic module)
 =======
     parent1 = roulette_selection(population, fitness)
     parent2 = roulette_selection(population, fitness)
