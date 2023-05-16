@@ -7,7 +7,8 @@ from genetic.crossing_pairs import crossing_individuals
 
 args = sys.argv
 pop_size = 100
-mut_tax = 2
+max_fitness = 216
+max_generations = 1000
 
 def main():
     with open(args[1], 'r') as arq:
@@ -19,63 +20,48 @@ def main():
     print("Starting genetic algorithm...")
     print(".\n.\n.")
 
+
+    ## Step 1: Generate initial random population
     population = Population(puzzle, pop_size)
     print("Generated initial population...")
+
+    ## Step 2: Calculate fitness of individuals
     fitness = population.calculate()
     print("Initial population's fitness calculated...")
 
     fitness_average = np.mean(fitness)
     fitness_highest = np.max(fitness)
     fitness_lowest = np.min(fitness)
-    median_fitness = np.median(fitness)
+    fitness_median = np.median(fitness)
     print("Average of initial population's fitness:", fitness_average)
     print("Highest initial population's fitness:", fitness_highest)
     print("Lowest initial population's fitness:", fitness_lowest)
-    print("Median of  initial population's fitness:", median_fitness)
+    print("Median of  initial population's fitness:", fitness_median)
 
+    criteria = True
+    generation = 0
 
-    parent1 = roulette_selection(population)
-    parent2 = roulette_selection(population)
+    while criteria and generation < max_generations:
+        print("Generation:", generation)
 
-    print("Parent 1:", parent1)
-    print("Parent 2:", parent2)
+        parent1 = roulette_selection(population)
+        parent2 = roulette_selection(population)
 
-    menu_state = True
+        crossing_individuals(parent1, parent2, population)
 
-    while(menu_state):
-        print(20*"--")
-        print("Choose the options below: ")
-        print("1. Display population individuals.")
-        print("2. Generate children population.")
-        print("3. Mutate individuals in population.")
-        print("0. Quit the program.")
-        print(20*"--")
-        
-        option = int(input("--> Option: "))
-        print("\n\n")
+        population.individuals = mutate_individuals(population, puzzle)
 
-        if option == 1:
-            if len(population.individuals) == 0:
-                print("You must generate initial population first.")
-            else: 
-                for i in range(pop_size):
-                    print(f"Individual {i}: {population.individuals[i]}")
+        if max(fitness) == max_fitness:
+            print("Solution found!")
+            criteria = False
+            best_individual = population.individuals[np.argmax(fitness)]
 
-        elif option == 2:
-            if len(population.individuals) == 0: 
-                print("You must generate initial population first.")
-            else: 
-                crossing_individuals(population)
+        generation += 1
 
-        elif option == 3:
-            if len(population.individuals) == 0: 
-                print("You must generate initial population first.")
-            else: 
-                mutate_individuals(population, puzzle)
-
-        elif option == 0:
-            print("Exiting.")
-            break
+    if criteria:
+        print("Maximum number of generations reached.")
+    else:
+        print("Best individual:", best_individual)
     
 if __name__ == '__main__':
     main()
