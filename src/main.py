@@ -22,23 +22,22 @@ def main():
     population = Population(puzzle, pop_size)
     print("Generated initial population...")
     fitness = population.calculate()
-    print("Initial population's fitness calculated...")
 
+    print("\t[Initial population]")
     fitness_average = np.mean(fitness)
     fitness_highest = np.max(fitness)
     fitness_lowest = np.min(fitness)
     median_fitness = np.median(fitness)
-    print("Average of initial population's fitness:", fitness_average)
-    print("Highest initial population's fitness:", fitness_highest)
-    print("Lowest initial population's fitness:", fitness_lowest)
-    print("Median of  initial population's fitness:", median_fitness)
+    print("AVERAGE:\t",fitness_average)
+    print("MAX VALUE:\t",fitness_highest)
+    print("MIN VALUE:\t",fitness_lowest)
+    print("MEDIAN: \t",median_fitness)
 
+    # parent1 = roulette_selection(population)
+    # parent2 = roulette_selection(population)
 
-    parent1 = roulette_selection(population)
-    parent2 = roulette_selection(population)
-
-    print("Parent 1:", parent1)
-    print("Parent 2:", parent2)
+    # print("Parent 1:", parent1)
+    # print("Parent 2:", parent2)
 
     menu_state = True
 
