@@ -1,9 +1,9 @@
 import sys
 import sudoku
 import numpy as np
-from genetic.population import *
+from genetic.population import Population
 from genetic.mutation import mutate_individuals
-from genetic.crossing import crossing_individuals
+from genetic.crossing import crossing_one_point
 
 args = sys.argv
 pop_size = 100
@@ -58,13 +58,14 @@ def main():
                 print("You must generate initial population first.")
             else: 
                 for i in range(pop_size):
-                    print(f"Individual {i}: {population.individuals[i]}")
+                    individual = population.individuals[i]
+                    print(f"Individual {i}: {individual.cromossomo}")
 
         elif option == 2:
             if len(population.individuals) == 0: 
                 print("You must generate initial population first.")
             else: 
-                crossing_individuals(population)
+                crossing_one_point(population, population.size)
 
         elif option == 3:
             if len(population.individuals) == 0: 

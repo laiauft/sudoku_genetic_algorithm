@@ -46,14 +46,20 @@ Cromossomo = lista de LINHA DO SUDOKU ``[[]]``
 Gene = linha de VALORES DO SUDOKU     ``[]``
 
 ### Genetic Operators
-1. SELECTION
+#### **SELECTION**
 
-2. CROSSING
+O operador de seleção tem como objetivo selecionar individuos da população atual que deverão gerar descendentes, dando preferencia ao melhores individuos da geração atual.
+
+1. #### **Seleção por Roleta**
+
+    Nesse processo é simulado uma roleta no qual cada individuo possui a sua probabilidade de seleção de acordo com o seu nível de aptidão. Assim individuos mais adpatados são mais fáceis de serem selecionados.
+
+3. CROSSING
 cruzamento com um ponto de cruzamento
     
      c = crossing_point (PONTO DE CRUZAMENTO)
      
-3. MUTATION
+1. MUTATION
 A mutação irá envolver alterar o genes para que seja gerado um novo cromossomo para um novo individuo da população
 
 ## Screenshots

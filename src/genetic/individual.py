@@ -4,7 +4,7 @@ class Individual:
     def __init__(self, puzzle) -> None:
         self.cromossomo = self.generate_cromossomo(puzzle) 
 
-    def generate_cromossomo(puzzle):
+    def generate_cromossomo(self, puzzle):
         cromossomo = []
         for row in puzzle:
             new_row = []
@@ -14,7 +14,10 @@ class Individual:
                 new_row.append(val)
             cromossomo.append(new_row)
         return cromossomo
-                
+
+    def define_cromossomo(self, genes):
+        self.cromossomo = genes
+
     def calculate_fitness(self):
         num  = 216
         total_erros = 0 
