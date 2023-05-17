@@ -3,7 +3,7 @@ import sudoku
 import numpy as np
 from genetic.population import *
 from genetic.mutation import mutate_individuals
-from genetic.crossing_pairs import crossing_individuals
+from genetic.crossing import crossing_individuals
 
 args = sys.argv
 pop_size = 100

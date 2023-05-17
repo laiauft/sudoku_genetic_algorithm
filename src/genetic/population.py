@@ -1,5 +1,4 @@
 import random
-
 from genetic.individual import Individual
 
 class Population:
@@ -46,13 +45,3 @@ class Population:
 			self.fitness_list.append(fitness)
 
 		return self.fitness_list
-
-def roulette_selection(population):
-	total_fitness = sum(population.fitness_list)
-	limit = random.uniform(0, total_fitness)
-	accumulated = 0
-
-	for i in range(len(population.individuals)):
-		accumulated += population.fitness_list[i]
-		if accumulated >= limit:
-			return population.individuals[i], population.fitness_list[i]
