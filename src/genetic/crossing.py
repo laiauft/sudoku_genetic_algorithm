@@ -12,9 +12,9 @@ def crossing_one_point(population: Population, children_count: int):
 			
 		# c = crossing_point
 		c = math.ceil(len(parent1.cromossomo)/2)
-		child1 = Individual(population.puzzle) 
-		child2 = Individual(population.puzzle)
+		child1 = Individual(population.puzzle)
 		child1.define_cromossomo(parent1.cromossomo[:c] + parent2.cromossomo[c:]) 
+		child2 = Individual(population.puzzle)
 		child2.define_cromossomo(parent1.cromossomo[:c] + parent2.cromossomo[c:])
 
 		children_population.append(child1)

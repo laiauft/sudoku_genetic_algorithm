@@ -15,10 +15,10 @@ class Individual:
             cromossomo.append(new_row)
         return cromossomo
 
-    def define_cromossomo(self, genes):
+    def define_cromossomo(self, genes) -> None:
         self.cromossomo = genes
 
-    def calculate_fitness(self):
+    def calculate_fitness(self) -> None:
         num  = 216
         total_erros = 0 
         for row in self.cromossomo:
