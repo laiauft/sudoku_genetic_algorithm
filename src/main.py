@@ -1,9 +1,9 @@
 import sys
 import sudoku
 import numpy as np
-from genetic.population import *
+from genetic.population import Population
 from genetic.mutation import mutate_individuals
-from genetic.crossing_pairs import crossing_individuals
+from genetic.crossing import crossing_one_point
 
 args = sys.argv
 pop_size = 100
@@ -22,23 +22,22 @@ def main():
     population = Population(puzzle, pop_size)
     print("Generated initial population...")
     fitness = population.calculate()
-    print("Initial population's fitness calculated...")
 
+    print("\t[Initial population]")
     fitness_average = np.mean(fitness)
     fitness_highest = np.max(fitness)
     fitness_lowest = np.min(fitness)
     median_fitness = np.median(fitness)
-    print("Average of initial population's fitness:", fitness_average)
-    print("Highest initial population's fitness:", fitness_highest)
-    print("Lowest initial population's fitness:", fitness_lowest)
-    print("Median of  initial population's fitness:", median_fitness)
+    print("AVERAGE:\t",fitness_average)
+    print("MAX VALUE:\t",fitness_highest)
+    print("MIN VALUE:\t",fitness_lowest)
+    print("MEDIAN: \t",median_fitness)
 
+    # parent1 = roulette_selection(population)
+    # parent2 = roulette_selection(population)
 
-    parent1 = roulette_selection(population)
-    parent2 = roulette_selection(population)
-
-    print("Parent 1:", parent1)
-    print("Parent 2:", parent2)
+    # print("Parent 1:", parent1)
+    # print("Parent 2:", parent2)
 
     menu_state = True
 
@@ -59,13 +58,14 @@ def main():
                 print("You must generate initial population first.")
             else: 
                 for i in range(pop_size):
-                    print(f"Individual {i}: {population.individuals[i]}")
+                    individual = population.individuals[i]
+                    print(f"Individual {i}: {individual.cromossomo}")
 
         elif option == 2:
             if len(population.individuals) == 0: 
                 print("You must generate initial population first.")
             else: 
-                crossing_individuals(population)
+                crossing_one_point(population, population.size)
 
         elif option == 3:
             if len(population.individuals) == 0: 

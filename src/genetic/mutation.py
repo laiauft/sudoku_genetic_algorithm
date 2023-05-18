@@ -17,6 +17,6 @@ def mutate_individuals(population, puzzle):
 					new_row.append(val)
 			individual.append(new_row)
 			mutated_individuals[i] = individual
-		print(f'Mutated Individual {i}: {mutated_individuals[i]}')
+		print(f'Mutated Individual {i}:\n{mutated_individuals[i]}')
 	new_population =  population.individuals[:-2] + mutated_individuals
 	return new_population 
