@@ -3,8 +3,9 @@ import random
 class Individual:
     def __init__(self, puzzle) -> None:
         self.cromossomo = self.generate_cromossomo(puzzle) 
+        self.calculate_fitness()
 
-    def generate_cromossomo(self, puzzle):
+    def generate_cromossomo(self, puzzle) -> list[int]:
         cromossomo = []
         for row in puzzle:
             new_row = []
@@ -17,6 +18,7 @@ class Individual:
 
     def define_cromossomo(self, genes) -> None:
         self.cromossomo = genes
+        self.calculate_fitness()
 
     def calculate_fitness(self) -> None:
         num  = 216

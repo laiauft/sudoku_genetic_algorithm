@@ -8,7 +8,7 @@ class Population:
 		self.individuals = self.generate()
 		self.fitness_list = self.calculate()
 
-	def generate(self):
+	def generate(self) -> list[Individual]:
 		population = []
 
 		for _ in range(self.size):
@@ -17,7 +17,7 @@ class Population:
 
 		return population
 
-	def calculate(self):
+	def calculate(self) -> list[int]:
 		self.fitness_list = []
 
 		num = 216
