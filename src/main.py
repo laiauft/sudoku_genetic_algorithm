@@ -7,7 +7,7 @@ from genetic.crossing import crossing_one_point
 
 args = sys.argv
 pop_size = 100
-mut_tax = 2
+mut_tax = 0.05
 
 def main():
     with open(args[1], 'r') as arq:
@@ -53,25 +53,27 @@ def main():
         option = int(input("--> Option: "))
         print("\n\n")
 
-        if option == 1:
+        if option == 1: # Display Population Individuals
             if len(population.individuals) == 0:
                 print("You must generate initial population first.")
             else: 
                 for i in range(pop_size):
                     individual = population.individuals[i]
-                    print(f"Individual {i}: {individual.cromossomo}")
+                    print(f"\n\nIndividual {i} - fitness[{individual.fitness}]")
+                    for row in population.individuals[i].cromossomo:
+                        print(f"{row}")
 
-        elif option == 2:
+        elif option == 2: # Generate Children Population
             if len(population.individuals) == 0: 
                 print("You must generate initial population first.")
             else: 
                 crossing_one_point(population, population.size)
 
-        elif option == 3:
+        elif option == 3: # Mutate Individuals in Population
             if len(population.individuals) == 0: 
                 print("You must generate initial population first.")
             else: 
-                mutate_individuals(population, puzzle)
+                mutate_individuals(population, mut_tax)
 
         elif option == 0:
             print("Exiting.")
