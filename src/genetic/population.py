@@ -46,3 +46,8 @@ class Population:
 			self.fitness_list.append(fitness)
 
 		return self.fitness_list
+
+	def new_generation(self, new_population: list[Individual]) -> None:
+		self.individuals = new_population
+		self.calculate()
+		self.individuals.sort(key=lambda x: x.fitness)
