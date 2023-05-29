@@ -10,8 +10,10 @@ pop_size = 100
 mut_tax = 0.05
 
 def main():
-    with open(args[1], 'r') as arq:
-        puzzle_string = arq.read()
+    """ with open(args[1], 'r') as arq:
+        puzzle_string = arq.read() """
+
+    puzzle_string = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......'
 
     puzzle = sudoku.string_to_array(puzzle_string)
     print("Selected puzzle:", puzzle_string)
@@ -47,6 +49,7 @@ def main():
         print("1. Display population individuals.")
         print("2. Generate children population.")
         print("3. Mutate individuals in population.")
+        print("4. Rate the population.")
         print("0. Quit the program.")
         print(20*"--")
         
@@ -74,6 +77,15 @@ def main():
                 print("You must generate initial population first.")
             else: 
                 mutate_individuals(population, mut_tax)
+
+            for i in population.individuals:
+                print(i.cromossomo)
+
+        elif option == 4: # Mutate Individuals in Population
+            if len(population.individuals) == 0: 
+                print("You must generate initial population first.")
+            else: 
+                population.calculate_fitness_pop()
 
         elif option == 0:
             print("Exiting.")

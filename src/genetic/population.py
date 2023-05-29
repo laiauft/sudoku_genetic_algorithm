@@ -46,3 +46,18 @@ class Population:
 			self.fitness_list.append(fitness)
 
 		return self.fitness_list
+	
+	def sort_individuals_by_fitness(self):
+		self.individuals.sort(lambda x: x.fitness, reverse=True)
+		#list_sort = sorted([(self.fitness_list[i], self.individuals[i]) for i in range(len(self.individuals))], key=lambda x: x[0], reverse=True)
+		#self.individuals[:] = list(map(lambda x: x[1], list_sort))[:]
+
+
+	def calculate_fitness_pop(self):
+		_ = [e.calculate_fitness() for e in self.individuals]
+		self.individuals[:] = list(map(lambda x: x.fitness, self.individuals))[:]
+
+		self.sort_individuals_by_fitness()
+
+		for i in range(len(self.individuals)):
+			print(f'Individual {i}:\n{self.individuals[i]}')
