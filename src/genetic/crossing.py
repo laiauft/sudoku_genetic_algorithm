@@ -12,20 +12,17 @@ def crossing_one_point(population: Population, children_count: int):
 		while(parent2 == parent1): # two parents should be distinct
 			parent2 = selection_roullete(population)
 			
-		c = math.ceil(len(parent1.cromossomo)/2) # crossing_point
+		c = math.ceil(len(parent1.chromosome)/2) # crossing_point
 
 		child1 = Individual(population.puzzle) # first child 
-		child1.define_cromossomo(parent1.cromossomo[:c] + parent2.cromossomo[c:]) 
+		child1.define_chromosome(parent1.chromosome[:c] + parent2.chromosome[c:]) 
 
 		child2 = Individual(population.puzzle) # second child
-		child2.define_cromossomo(parent2.cromossomo[:c] + parent1.cromossomo[c:])
+		child2.define_chromosome(parent2.chromosome[:c] + parent1.chromosome[c:])
 
 		children_population.extend([child1, child2]); i = i + 1
-
-	# for i in range(len(children_population)):
-	# 	print(f'Child {i}:\n{children_population[i].cromossomo}')
 	
-	m = int(math.ceil(population.size)/2) 
+	m = int(math.ceil(population.size/2))
 	
 	# ord individual by fitness, so best one will be first 
 	population.individuals.sort(key=lambda x: x.fitness)

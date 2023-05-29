@@ -31,9 +31,9 @@ def mutate_individuals(population: Population, mutation_tax: float):
 		if i <= (population.size * mutation_tax): 	# apenas elementos abaixo 
 			# ou igual a taxa de mutação (porcentagem da população) será mutado
 			mutated = population.individuals[i] 	# ele ira mutar os individuos
-			for k in range(len(mutated.cromossomo)): 
+			for k in range(len(mutated.chromosome)): 
 				# percorrendo cada linha dentro do gene do cromomosso	
-				individual_row = mutated.cromossomo[k]
+				individual_row = mutated.chromosome[k]
 				numbers_mask_row = numbers_mask[k] 
 				for j in range(len(row)): 
 					# compara o valor correspondente da mascara com o valor do gene
@@ -43,7 +43,7 @@ def mutate_individuals(population: Population, mutation_tax: float):
 						if random.randint(1, total_cells) == 1: 
 							# agora o individuo passa por outra triagem que define se 
 							# o seu valor terá probabilidade de ser mutado de fato ou não
-							mutated.cromossomo[k][j] = random.randint(1, 9)
+							mutated.chromosome[k][j] = random.randint(1, 9)
 							mutated.calculate_fitness()
 							break # uma vez que o valor é mutado ele deve sair dos laços
 					else:
@@ -55,12 +55,3 @@ def mutate_individuals(population: Population, mutation_tax: float):
 			# abaixo da taxa (ou igual) a porcentagem de mutação passaram pela mesma triagem
 			mutated_individuals.append(mutated)
 		population.individuals[i] = mutated
-	
-	i = 0
-	for i in range(len(mutated_individuals)):
-		print(f"Mutated Individual [{i}]", end=" - ") 
-		print(f"fitness[{mutated_individuals[i].fitness}]")
-		for row in mutated_individuals[i].cromossomo:
-			print(row)
-		print()
-	# print(f'Mutated Individual {i}:\n{mutated_individuals[i]}')

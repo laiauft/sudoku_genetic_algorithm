@@ -1,4 +1,5 @@
 import sys
+import csv
 import sudoku
 import numpy as np
 from genetic.population import Population
@@ -21,6 +22,11 @@ def show_population_stats(population: Population) -> None:
     print("MIN VALUE:\t",fitness_lowest)
     print("MEDIAN: \t",median_fitness)
 
+def write_generation_info_to_csv(filename: str, generation: int, population: Population) -> None:
+    with open(filename, 'a', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([generation] + population.fitness_list)
+
 def main():
     with open(args[1], 'r') as arq:
         puzzle_string = arq.read()
@@ -37,48 +43,18 @@ def main():
     print("\t[Initial population]")
     show_population_stats(population)
 
-    menu_state = True
+    csv_filename = "generation_info.csv"
 
-    while(menu_state):
-        print(20*"--")
-        print("Choose the options below: ")
-        print("1. Display population individuals.")
-        print("2. Generate new initial population.")
-        print("3. Execute program (run generations).")
-        print("0. Quit the program.")
-        print(20*"--")
-        
-        option = int(input("--> Option: "))
+    for i in range(generations):
+        print(f"Generation {i}")
+        show_population_stats(population)
+
+        write_generation_info_to_csv(csv_filename, i, population)
+
+        crossing_one_point(population, int(pop_size/2))
+        mutate_individuals(population, mut_tax)
         print("\n\n")
 
-        if option == 1: # Display Population Individuals
-            if len(population.individuals) == 0:
-                print("You must generate initial population first.")
-            else: 
-                for i in range(pop_size):
-                    individual = population.individuals[i]
-                    print(f"\n\nIndividual {i} - fitness[{individual.fitness}]")
-                    for row in population.individuals[i].cromossomo:
-                        print(f"{row}")
-
-        elif option == 2: # Generate new initial population
-            population = Population(puzzle, pop_size)
-
-        elif option == 3: # Mutate Individuals in Population
-            if(population.individuals == 0):
-                print("You must generate initial population first.")
-            else:
-                for i in range(generations):
-                    print(f"Gerenation {i}")
-                    show_population_stats(population)
-
-                    crossing_one_point(population, int(pop_size/2))
-                    mutate_individuals(population, mut_tax)
-                    print("\n\n")
-
-        elif option == 0:
-            print("Exiting.")
-            break
     
 if __name__ == '__main__':
     main()
