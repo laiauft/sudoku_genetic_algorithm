@@ -8,6 +8,18 @@ from genetic.crossing import crossing_one_point
 args = sys.argv
 pop_size = 100
 mut_tax = 0.05
+generations = 100
+
+def show_population_stats(population: Population) -> None:
+    fitness_average = np.mean(population.fitness_list)
+    fitness_highest = np.max(population.fitness_list)
+    fitness_lowest = np.min(population.fitness_list)
+    median_fitness = np.median(population.fitness_list)
+
+    print("AVERAGE:\t",fitness_average)
+    print("MAX VALUE:\t",fitness_highest)
+    print("MIN VALUE:\t",fitness_lowest)
+    print("MEDIAN: \t",median_fitness)
 
 def main():
     with open(args[1], 'r') as arq:
@@ -21,23 +33,9 @@ def main():
 
     population = Population(puzzle, pop_size)
     print("Generated initial population...")
-    fitness = population.calculate()
 
     print("\t[Initial population]")
-    fitness_average = np.mean(fitness)
-    fitness_highest = np.max(fitness)
-    fitness_lowest = np.min(fitness)
-    median_fitness = np.median(fitness)
-    print("AVERAGE:\t",fitness_average)
-    print("MAX VALUE:\t",fitness_highest)
-    print("MIN VALUE:\t",fitness_lowest)
-    print("MEDIAN: \t",median_fitness)
-
-    # parent1 = roulette_selection(population)
-    # parent2 = roulette_selection(population)
-
-    # print("Parent 1:", parent1)
-    # print("Parent 2:", parent2)
+    show_population_stats(population)
 
     menu_state = True
 
@@ -45,8 +43,8 @@ def main():
         print(20*"--")
         print("Choose the options below: ")
         print("1. Display population individuals.")
-        print("2. Generate children population.")
-        print("3. Mutate individuals in population.")
+        print("2. Generate new initial population.")
+        print("3. Execute program (run generations).")
         print("0. Quit the program.")
         print(20*"--")
         
@@ -63,17 +61,20 @@ def main():
                     for row in population.individuals[i].cromossomo:
                         print(f"{row}")
 
-        elif option == 2: # Generate Children Population
-            if len(population.individuals) == 0: 
-                print("You must generate initial population first.")
-            else: 
-                crossing_one_point(population, population.size)
+        elif option == 2: # Generate new initial population
+            population = Population(puzzle, pop_size)
 
         elif option == 3: # Mutate Individuals in Population
-            if len(population.individuals) == 0: 
+            if(population.individuals == 0):
                 print("You must generate initial population first.")
-            else: 
-                mutate_individuals(population, mut_tax)
+            else:
+                for i in range(generations):
+                    print(f"Gerenation {i}")
+                    show_population_stats(population)
+
+                    crossing_one_point(population, int(pop_size/2))
+                    mutate_individuals(population, mut_tax)
+                    print("\n\n")
 
         elif option == 0:
             print("Exiting.")

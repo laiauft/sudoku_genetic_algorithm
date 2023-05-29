@@ -22,8 +22,8 @@ def crossing_one_point(population: Population, children_count: int):
 
 		children_population.extend([child1, child2]); i = i + 1
 
-	for i in range(len(children_population)):
-		print(f'Child {i}:\n{children_population[i].cromossomo}')
+	# for i in range(len(children_population)):
+	# 	print(f'Child {i}:\n{children_population[i].cromossomo}')
 	
 	m = int(math.ceil(population.size)/2) 
 	
@@ -34,4 +34,4 @@ def crossing_one_point(population: Population, children_count: int):
 	# new generation will be half of old population and half new generation
 	new_population = population.individuals[:m] + children_population[:m]
 
-	population.individuals = new_population # set generation to new one 
+	population.new_generation(new_population) # set generation to new one 
